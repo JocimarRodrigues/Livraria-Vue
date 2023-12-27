@@ -45,8 +45,16 @@ class LivrosController {
   static async atualizarLivro(req, res) {
     const { id } = req.params;
     const novasInfos = req.body;
+    const livroAtualizado = {
+        id: novasInfos.id,
+        titulo: novasInfos.titulo,
+        autor: novasInfos.autor,
+        classificacao: novasInfos.classificacao,
+        resenha: novasInfos.resenha,
+        imagem: novasInfos.imagem
+    }
     try {
-      await database.Livros.update(novasInfos, {
+      await database.Livros.update(livroAtualizado, {
         where: {
           id: Number(id),
         },
