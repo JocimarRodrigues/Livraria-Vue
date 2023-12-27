@@ -32,7 +32,7 @@ class LivrosController {
         autor: dados.autor,
         classificacao: dados.classificacao,
         resenha: dados.resenha,
-        imagem: dados.imagem
+        imagem: req.file.path
     }
     try {
       const novoLivroCriado = await database.Livros.create(livro);
