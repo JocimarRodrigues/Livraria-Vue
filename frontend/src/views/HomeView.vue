@@ -1,18 +1,37 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="cards" v-for="livro in livros" :key="livro.id">
+    <h1>{{ livro.titulo }}</h1>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { defineComponent, onMounted, ref } from 'vue';
+import { apiService } from '@/api/services';
+import ILivro from '@/interfaces/ILivro';
+
+
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    HelloWorld,
+
   },
+  setup() {
+    const livros = ref<ILivro[]>([])
+    const livrosCarregados = ref(false)
+
+    onMounted(async () => {
+      try {
+        livros.value = await apiService.pegaTodosOsLivros()
+        livrosCarregados.value = true
+      } catch (error) {
+        console.log(error)
+      }
+    })
+    console.log(livros)
+    return {
+      livros
+    }
+  }
 });
 </script>
