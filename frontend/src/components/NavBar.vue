@@ -40,23 +40,14 @@ export default defineComponent({
         font-size: 20pt;
         height: 10vh;
         color: white;
-
-
         .titulo {
             display: flex;
             align-items: center;
             padding: 0 15px;
-
             p {
                 margin-right: 5px;
             }
         }
-
-
-
-
-
-
         .links {
             display: flex;
             gap: 15px;
