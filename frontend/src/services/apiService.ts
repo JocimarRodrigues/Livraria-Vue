@@ -1,4 +1,4 @@
-import api from "../index";
+import api from '../config'
 
 export const pegaTodosOsLivros = async () => {
   try {

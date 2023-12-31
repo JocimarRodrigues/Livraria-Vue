@@ -1,15 +1,22 @@
 <template>
-  <div class="cards" v-for="livro in livros" :key="livro.id">
-    <h1>{{ livro.titulo }}</h1>
+  <div class="container">
+    <div class="loading" v-if="loading">
+      <p>Loading...</p>
+    </div>
+    <div class="cards">
+      <div class="card" v-for="livro in livros" :key="livro.id">
+        <h1>{{ livro.titulo }}</h1>
+        <h2>{{ livro.autor }}</h2>
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import { apiService } from '@/api/services';
 import ILivro from '@/interfaces/ILivro';
-
-
+import store from '@/store';
 
 export default defineComponent({
   name: 'HomeView',
@@ -18,19 +25,20 @@ export default defineComponent({
   },
   setup() {
     const livros = ref<ILivro[]>([])
-    const livrosCarregados = ref(false)
+    const loading = ref(true)
 
     onMounted(async () => {
       try {
-        livros.value = await apiService.pegaTodosOsLivros()
-        livrosCarregados.value = true
+        await store.dispatch('carregaLivros')
+        livros.value = store.state.livros
+        loading.value = false
       } catch (error) {
         console.log(error)
       }
     })
-    console.log(livros)
     return {
-      livros
+      livros,
+      loading
     }
   }
 });
