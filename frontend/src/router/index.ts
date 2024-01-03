@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
     component: LivrosView,
     children: [
       {
-        path: '',
+        path: ':id',
         name: 'CardComponent',
         component: CardComponent
       },

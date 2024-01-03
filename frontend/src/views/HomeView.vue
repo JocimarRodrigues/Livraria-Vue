@@ -4,7 +4,7 @@
       <p>Loading...</p>
     </div>
     <div class="cards">
-      <div class="card" v-for="livro in livros" :key="livro.id">
+      <div class="card" v-for="livro in livros" :key="livro.id" @click="irParaLivros(livro)">
         <img :src="`${caminhoImagem}${livro.imagem}`" alt="">
         <h1>{{ livro.titulo }}</h1>
         <h2>{{ livro.autor }}</h2>
@@ -16,8 +16,10 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import ILivro from '@/interfaces/ILivro';
 import store from '@/store';
+
 
 export default defineComponent({
   name: 'HomeView',
@@ -25,6 +27,7 @@ export default defineComponent({
 
   },
   setup() {
+    const router = useRouter()
     const livros = ref<ILivro[]>([])
     const caminhoImagem = 'http://localhost:3000/'
     const loading = ref(true)
@@ -38,10 +41,20 @@ export default defineComponent({
         console.log(error)
       }
     })
+
+    const irParaLivros = async (livro: ILivro) => {
+      try {
+        router.push({name: 'CardComponent', params: {id: livro.id}})
+      } catch (error) {
+        console.log(error)
+      }
+   
+    }
     return {
       livros,
       loading,
-      caminhoImagem
+      caminhoImagem,
+      irParaLivros
     }
   }
 });
