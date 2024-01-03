@@ -9,7 +9,6 @@
         <h1>{{ livro.titulo }}</h1>
         <h2>{{ livro.autor }}</h2>
         <h3>{{ livro.classificacao }}</h3>
-
       </div>
     </div>
   </div>
