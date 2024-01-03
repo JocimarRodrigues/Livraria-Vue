@@ -26,6 +26,7 @@ class LivrosController {
 
   static async criaNovoLivro(req, res) {
     const dados = req.body;
+
     const livro = {
         id: dados.id,
         titulo: dados.titulo,

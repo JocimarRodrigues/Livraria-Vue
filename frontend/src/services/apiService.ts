@@ -20,7 +20,22 @@ export const pegaUmLivro = async (id: number) => {
   }
 }
 
+export const adicionaLivro = async (dados: any) => {
+  try {
+    const response = await api.post('/livros', dados, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
+    const data = response.data
+    return data;
+  } catch (error) {
+    console.log((error as Error).message)
+  }
+}
+
 export const apiService = {
   pegaTodosOsLivros,
-  pegaUmLivro
+  pegaUmLivro,
+  adicionaLivro
 };

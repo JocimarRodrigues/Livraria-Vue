@@ -10,7 +10,7 @@
                 <router-link to="/">
                     Inicio
                 </router-link>
-                <router-link to="/novoLivro">
+                <router-link to="/livros/adicionaLivro">
                     Adicionar Livro
                 </router-link>
             </div>
