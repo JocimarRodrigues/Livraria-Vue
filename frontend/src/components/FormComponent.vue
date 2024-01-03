@@ -4,19 +4,19 @@
             <div class="infos">
                 <input type="text" name="titulo"
                     :placeholder="livroProps ? `${livroProps.titulo}` : 'Digite um título para o livro'"
-                    v-model="livro.titulo" />
+                    v-model="livro.titulo" required />
                 <input type="text" name="autor"
                     :placeholder="livroProps ? `${livroProps.autor}` : 'DIgite um nome para o autor'"
-                    v-model="livro.autor" />
+                    v-model="livro.autor" required/>
                 <input type="number" name="classificacao"
                     :placeholder="livroProps ? `${livroProps.classificacao}` : 'Dê uma nota de 1 a 5 para o livro.'"
-                    v-model="livro.classificacao" />
+                    v-model="livro.classificacao" required/>
             </div>
             <div class="imagem">
-                <img :src="livro.imagemUrl" alt="" class="" v-if="livro">
+                <img :src="livro.imagemUrl" alt="" class="" v-if="livroProps">
                 <img src="../assets/no-image.png" alt="" v-else>
                 <input type="file" name="imagem" id="fileInput" placeholder="Selecione uma imagem"
-                    @change="onInputChange($event)" />
+                    @change="onInputChange($event)" required/>
                 <label for="fileInput">Escolher arquivo</label>
             </div>
             <h1>Review</h1>
