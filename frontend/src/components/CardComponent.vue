@@ -32,7 +32,7 @@ export default defineComponent({
             livroId.value = route.params.id
             await store.dispatch('pegalivro', livroId.value)
             livro.value = store.state.livro
-            console.log(livro.value)
+
         })
         const editarLivro = () => {
             router.push("/livros/editaLivro")

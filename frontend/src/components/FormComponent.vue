@@ -2,13 +2,18 @@
     <div class="container">
         <form @submit.prevent="onSubmit">
             <div class="infos">
-                <input type="text" name="titulo" :placeholder="livroProps ? `${livroProps.titulo}` : 'Digite um título para o livro'" v-model="livro.titulo" />
-                <input type="text" name="autor" placeholder="Digite o nome do Autor" v-model="livro.autor" />
-                <input type="number" name="classificacao" placeholder="Dê uma nota de 1 a 5 para o livro."
+                <input type="text" name="titulo"
+                    :placeholder="livroProps ? `${livroProps.titulo}` : 'Digite um título para o livro'"
+                    v-model="livro.titulo" />
+                <input type="text" name="autor"
+                    :placeholder="livroProps ? `${livroProps.autor}` : 'DIgite um nome para o autor'"
+                    v-model="livro.autor" />
+                <input type="number" name="classificacao"
+                    :placeholder="livroProps ? `${livroProps.classificacao}` : 'Dê uma nota de 1 a 5 para o livro.'"
                     v-model="livro.classificacao" />
             </div>
             <div class="imagem">
-                <img :src="livro.imagemUrl" alt="" class="" v-if="livro.imagemUrl">
+                <img :src="livro.imagemUrl" alt="" class="" v-if="livro">
                 <img src="../assets/no-image.png" alt="" v-else>
                 <input type="file" name="imagem" id="fileInput" placeholder="Selecione uma imagem"
                     @change="onInputChange($event)" />
@@ -26,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted, ref, toRefs } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref, toRefs } from 'vue';
 import { apiService } from "@/services/apiService";
 
 export default defineComponent({
@@ -34,7 +39,7 @@ export default defineComponent({
     props: {
         livroProps: Object
     },
-    setup(props, {emit}) {
+    setup(props, { emit }) {
 
         const livro = ref({
             titulo: '',
@@ -46,9 +51,12 @@ export default defineComponent({
 
         })
 
-        
-
-
+        onMounted(() => {
+            if (props.livroProps?.imagem) {
+                console.log(props.livroProps.imagem)
+                livro.value.imagemUrl = props.livroProps.imagem
+            }
+        })
 
         const onSubmit = async () => {
             const formData = new FormData()
@@ -60,10 +68,13 @@ export default defineComponent({
         }
         const onInputChange = (e: Event) => {
             const data = e.target as HTMLInputElement
+
             if (data.files) {
                 livro.value.imagem = data.files[0];
                 livro.value.imagemUrl = URL.createObjectURL(data.files[0]);
+
             }
+
         }
         onUnmounted(() => {
             emit('limpraLivroProps', null)
@@ -132,6 +143,7 @@ export default defineComponent({
             margin: 15px;
             justify-content: center;
             align-items: center;
+
             img {
                 width: 30vw;
             }

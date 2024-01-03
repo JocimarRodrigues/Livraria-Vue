@@ -17,7 +17,8 @@ export default defineComponent({
     setup() {
         const livro = ref<ILivro>()
         livro.value = store.state.livro
-        console.log(livro.value)
+        const caminhoImagem = `http://localhost:3000/${livro.value.imagem}`
+        livro.value.imagem = caminhoImagem
         const limpaProps = () => {
             livro.value = undefined
         }
