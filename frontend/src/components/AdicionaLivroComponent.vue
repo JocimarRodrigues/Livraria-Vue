@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h2>Adicionar Livro</h2>
     </div>
     <FormComponent />
@@ -14,3 +14,10 @@ export default defineComponent({
     components: { FormComponent }
 })
 </script>
+
+<style scoped lang="scss">
+.container {
+    margin-top: 15px;
+    text-align: center;
+}
+</style>

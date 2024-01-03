@@ -1,13 +1,37 @@
 <template>
-    <div>
-        <h2>Edita Livro</h2>
+    <div class="container">
+        <h2>Editar Livro</h2>
+        <FormComponent :livroProps="livro" @limpaLivroProps="limpaProps"/>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import FormComponent from './FormComponent.vue';
+import ILivro from '@/interfaces/ILivro';
+import store from '@/store';
 
 export default defineComponent({
-    name: 'EditaLivroComponent'
+    name: 'EditaLivroComponent',
+    components: { FormComponent },
+    setup() {
+        const livro = ref<ILivro>()
+        livro.value = store.state.livro
+        console.log(livro.value)
+        const limpaProps = () => {
+            livro.value = undefined
+        }
+        return {
+            livro,
+            limpaProps
+        }
+    }
 })
 </script>
+
+<style scoped lang="scss">
+    .container {
+        margin-top: 15px;
+        text-align: center;
+    }
+</style>

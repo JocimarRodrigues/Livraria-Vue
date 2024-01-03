@@ -9,7 +9,7 @@
         <div class="conteudo">
             <h1>Resenha</h1>
             <p>{{ livro?.resenha }}</p>
-            <button>Editar</button>
+            <button @click="editarLivro">Editar</button>
             <button>Excluir</button>
         </div>
     </div>
@@ -19,7 +19,7 @@
 import ILivro from '@/interfaces/ILivro'
 import store from '@/store'
 import { defineComponent, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 export default defineComponent({
     name: 'CardComponent',
     setup() {
@@ -27,15 +27,20 @@ export default defineComponent({
         const caminhoDaImagem = "http://localhost:3000/"
         const livroId = ref()
         const route = useRoute()
+        const router = useRouter()
         onMounted(async () => {
             livroId.value = route.params.id
             await store.dispatch('pegalivro', livroId.value)
             livro.value = store.state.livro
             console.log(livro.value)
         })
+        const editarLivro = () => {
+            router.push("/livros/editaLivro")
+        }
         return {
             livro,
-            caminhoDaImagem
+            caminhoDaImagem,
+            editarLivro
         }
 
     }

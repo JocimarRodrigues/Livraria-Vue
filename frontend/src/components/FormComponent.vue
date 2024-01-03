@@ -2,7 +2,7 @@
     <div class="container">
         <form @submit.prevent="onSubmit">
             <div class="infos">
-                <input type="text" name="titulo" placeholder="Digite um titulo" v-model="livro.titulo" />
+                <input type="text" name="titulo" :placeholder="livroProps ? `${livroProps.titulo}` : 'Digite um título para o livro'" v-model="livro.titulo" />
                 <input type="text" name="autor" placeholder="Digite o nome do Autor" v-model="livro.autor" />
                 <input type="number" name="classificacao" placeholder="Dê uma nota de 1 a 5 para o livro."
                     v-model="livro.classificacao" />
@@ -26,17 +26,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onUnmounted, ref, toRefs } from 'vue';
 import { apiService } from "@/services/apiService";
 
 export default defineComponent({
     name: 'FormComponent',
     props: {
-        livroProps: {
-            type: Object
-        }
+        livroProps: Object
     },
-    setup() {
+    setup(props, {emit}) {
+
         const livro = ref({
             titulo: '',
             autor: '',
@@ -46,6 +45,8 @@ export default defineComponent({
 
 
         })
+
+        
 
 
 
@@ -58,17 +59,16 @@ export default defineComponent({
             await apiService.adicionaLivro(formData)
         }
         const onInputChange = (e: Event) => {
-
             const data = e.target as HTMLInputElement
-
             if (data.files) {
                 livro.value.imagem = data.files[0];
-                livro.value.imagemUrl = URL.createObjectURL(data.files[0]); // Criar URL local para a imagem
+                livro.value.imagemUrl = URL.createObjectURL(data.files[0]);
             }
-
-
-
         }
+        onUnmounted(() => {
+            emit('limpraLivroProps', null)
+
+        })
 
         return {
             livro,
