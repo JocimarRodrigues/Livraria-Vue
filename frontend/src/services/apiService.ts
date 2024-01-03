@@ -20,7 +20,7 @@ export const pegaUmLivro = async (id: number) => {
   }
 }
 
-export const adicionaLivro = async (dados: any) => {
+export const adicionaLivro = async (dados: FormData) => {
   try {
     const response = await api.post('/livros', dados, {
       headers: {
