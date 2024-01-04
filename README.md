@@ -8,7 +8,7 @@
 
 ### [Readme Back-end](https://github.com/JocimarRodrigues/Livraria-Vue/tree/main/backend)
 
-### [Readme Frot-end](https://github.com/JocimarRodrigues/Livraria-Vue/tree/main/frontend)
+### [Readme Front-end](https://github.com/JocimarRodrigues/Livraria-Vue/tree/main/frontend)
 
 
 # Demonstração do Projeto
