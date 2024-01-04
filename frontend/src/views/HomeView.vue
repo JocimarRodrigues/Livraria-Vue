@@ -73,68 +73,31 @@ export default defineComponent({
       flex-direction: column;
       padding: 15px;
       margin: 15px;
+      cursor: pointer;
+      img {
+        width: 300px;
+        height: 500px;
+      }
       box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px,
         rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
         rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
       h1 {
         margin-top: 20px;
         padding-left: 25px;
+        font-size: 1.7rem;
   
       }
       h2 {
+        color: gray;
+        font-size: 1.3rem;
         padding-left: 25px;
 
       }
       h3 {
         padding-left: 25px;
       }
-      img {
-        width: 300px;
-        height: 500px;
-      }
-      button {
-        width: 60%;
-        margin: auto;
-        justify-content: center;
-        height: 40px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        margin-top: 30px;
-        background-color: rgb(10, 108, 255);
-        border: none;
-        color: rgba(236, 236, 236, 0.863);
-        font-weight: 100;
 
-        cursor: pointer;
-        transition: 1s;
-        &:hover {
-          transform: scale(1.2);
-        }
-      }
-    }
-  }
-  .loading {
-    display: flex;
-    justify-content: center;
-    margin-top: 5em;
-    text-align: center;
 
- 
-    height: 100%;
-    .icon {
-      color: rgb(10, 108, 255);
-      font-size: 20vw;
-      animation: animacao 2s linear infinite;
-      transform-origin: center;
-    }
-
-    @keyframes animacao {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
     }
   }
 }

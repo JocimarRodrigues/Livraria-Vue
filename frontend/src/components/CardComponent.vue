@@ -72,7 +72,7 @@ export default defineComponent({
         margin: 15px;
 
         img {
-            width: 30vw;
+            width: 23vw;
             height: 50vh;
         }
 
