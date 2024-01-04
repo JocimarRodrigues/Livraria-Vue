@@ -5,6 +5,9 @@
                 <p>
                     Minha Livraria
                 </p>
+                <span>
+                    <img src="../assets/logo.png" alt="">
+                </span>
             </div>
             <div class="links">
                 <router-link to="/">
@@ -46,6 +49,12 @@ export default defineComponent({
             padding: 0 15px;
             p {
                 margin-right: 5px;
+            }
+            span {
+                img {
+                    margin-left: 10px;
+                    width: 2vw;
+                }
             }
         }
         .links {

@@ -10,18 +10,18 @@
                     required />
                 <input type="number" name="classificacao"
                     :placeholder="livroProps ? `${livroProps.classificacao}` : 'Dê uma nota de 1 a 5 para o livro.'"
-                    v-model="livro.classificacao" required />
+                    v-model="livro.classificacao" required min="0" max="5"/>
             </div>
             <div class="imagem">
                 <img :src="livro.imagemUrl" alt="" class="" v-if="livroProps || livro.imagemUrl">
                 <img src="../assets/no-image.png" alt="" v-else>
                 <input type="file" name="imagem" id="fileInput" placeholder="Selecione uma imagem"
-                    @change="onInputChange($event)" required />
+                    @change="onInputChange($event)" required/>
                 <label for="fileInput">Escolher arquivo</label>
             </div>
             <h1>Review</h1>
             <div class="resenha">
-                <textarea name="resenha" id="" cols="30" rows="10" class="resenha"></textarea>
+                <textarea name="resenha" id="" cols="30" rows="10" class="resenha" v-model="livro.resenha" :placeholder="livroProps? `${livroProps.resenha}` : 'Digite uma review.'"></textarea>
             </div>
             <button type="submit">
                 Enviar
@@ -46,19 +46,22 @@ export default defineComponent({
         const livro = ref({
             titulo: '',
             autor: '',
-            classificacao: 0,
+            classificacao: '',
+            resenha: '',
             imagem: null as File | null,
             imagemUrl: ''
         })
 
         const idLivro = store.state.livro.id
 
+        const livroStore = store.state.livro
+
         onMounted(() => {
             if (props.livroProps?.imagem) {
                 console.log(props.livroProps.imagem)
                 livro.value.imagemUrl = props.livroProps.imagem
             }
-            console.log(props.tipoFormularioProps)
+
         })
 
         const onSubmit = async () => {
@@ -66,6 +69,7 @@ export default defineComponent({
             formData.append("titulo", livro.value.titulo)
             formData.append("autor", livro.value.autor)
             formData.append("classificacao", livro.value.classificacao.toString())
+            formData.append("resenha", livro.value.resenha)
             formData.append("imagem", livro.value.imagem as File)
 
             switch (props.tipoFormularioProps) {

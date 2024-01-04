@@ -2,13 +2,13 @@
     <div class="container" @="livro" v-if="livro">
         <div class="card">
             <img :src="`${caminhoDaImagem}${livro.imagem}`" alt="">
-            <h1>{{ livro?.titulo }}</h1>
-            <h2>Autor: {{ livro?.autor }}</h2>
-            <h2>Adicionado: {{  }}</h2>
+            <h1>Titulo: {{ livro.titulo }}</h1>
+            <h2>Autor: {{ livro.autor }}</h2>
+            <h3> <EstrelasComponent :total-estrelas="livro.classificacao"/></h3>
         </div>
         <div class="conteudo">
-            <h1>Resenha</h1>
-            <p>{{ livro?.resenha }}</p>
+            <h1>Review</h1>
+            <p>{{ livro.resenha }}</p>
             <button @click="editarLivro">Editar</button>
             <button @click="excluirLivro">Excluir</button>
         </div>
@@ -21,37 +21,36 @@ import { apiService } from '@/services/apiService'
 import store from '@/store'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import EstrelasComponent from './EstrelasComponent.vue'
 export default defineComponent({
     name: 'CardComponent',
     setup() {
-        const livro = ref<ILivro>()
-        const caminhoDaImagem = "http://localhost:3000/"
-        const livroId = ref()
-        const route = useRoute()
-        const router = useRouter()
+        const livro = ref<ILivro>();
+        const caminhoDaImagem = "http://localhost:3000/";
+        const livroId = ref();
+        const route = useRoute();
+        const router = useRouter();
         onMounted(async () => {
-            livroId.value = route.params.id
-            await store.dispatch('pegalivro', livroId.value)
-            livro.value = store.state.livro
-
-        })
+            livroId.value = route.params.id;
+            await store.dispatch('pegalivro', livroId.value);
+            livro.value = store.state.livro;
+        });
         const editarLivro = () => {
-            router.push("/livros/editaLivro")
-        }
+            router.push("/livros/editaLivro");
+        };
         const excluirLivro = async () => {
-            await apiService.excluirLivro(livroId.value)
-            alert("Livro excluido com sucesso!")
-            router.push("/")
-        }   
-
+            await apiService.excluirLivro(livroId.value);
+            alert("Livro excluido com sucesso!");
+            router.push("/");
+        };
         return {
             livro,
             caminhoDaImagem,
             editarLivro,
             excluirLivro
-        }
-
-    }
+        };
+    },
+    components: { EstrelasComponent }
 })
 
 
