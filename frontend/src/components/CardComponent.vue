@@ -1,7 +1,7 @@
 <template>
-    <div class="container" @="livro">
+    <div class="container" @="livro" v-if="livro">
         <div class="card">
-            <img :src="`${caminhoDaImagem}${livro?.imagem}`" alt="">
+            <img :src="`${caminhoDaImagem}${livro.imagem}`" alt="">
             <h1>{{ livro?.titulo }}</h1>
             <h2>Autor: {{ livro?.autor }}</h2>
             <h2>Adicionado: {{  }}</h2>
@@ -10,13 +10,14 @@
             <h1>Resenha</h1>
             <p>{{ livro?.resenha }}</p>
             <button @click="editarLivro">Editar</button>
-            <button>Excluir</button>
+            <button @click="excluirLivro">Excluir</button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import ILivro from '@/interfaces/ILivro'
+import { apiService } from '@/services/apiService'
 import store from '@/store'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -37,10 +38,17 @@ export default defineComponent({
         const editarLivro = () => {
             router.push("/livros/editaLivro")
         }
+        const excluirLivro = async () => {
+            await apiService.excluirLivro(livroId.value)
+            alert("Livro excluido com sucesso!")
+            router.push("/")
+        }   
+
         return {
             livro,
             caminhoDaImagem,
-            editarLivro
+            editarLivro,
+            excluirLivro
         }
 
     }

@@ -48,9 +48,20 @@ export const editaLivro = async (id: number, dados: FormData) => {
   }
 };
 
+export const excluirLivro = async (id: number) => {
+  try {
+    const response = await api.delete(`/livros/${id}`)
+    const data = response.data;
+    return data
+  } catch (error) {
+    console.log((error as Error).message);
+  }
+}
+
 export const apiService = {
   pegaTodosOsLivros,
   pegaUmLivro,
   adicionaLivro,
-  editaLivro
+  editaLivro,
+  excluirLivro
 };
