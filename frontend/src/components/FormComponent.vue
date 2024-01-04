@@ -164,7 +164,8 @@ export default defineComponent({
             align-items: center;
 
             img {
-                width: 30vw;
+                height: 40vh;
+                width: 20vw;
             }
 
             label {
