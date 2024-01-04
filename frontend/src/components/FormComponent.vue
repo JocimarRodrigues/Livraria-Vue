@@ -34,6 +34,7 @@
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
 import { apiService } from "@/services/apiService";
 import store from '@/store';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'FormComponent',
@@ -51,6 +52,8 @@ export default defineComponent({
             imagem: null as File | null,
             imagemUrl: ''
         })
+
+        const router = useRouter()
 
         const idLivro = store.state.livro.id
 
@@ -74,10 +77,12 @@ export default defineComponent({
                 case "adicionar":
                     await apiService.adicionaLivro(formData)
                     alert("Livro adicionado com sucesso!")
+                    router.push('/')
                     break
                 case "editar":
                     await apiService.editaLivro(idLivro, formData)
                     alert("Livro editado com sucesso!")
+                    router.push('/')
                     break
             }
 
