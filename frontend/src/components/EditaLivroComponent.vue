@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2>Editar Livro</h2>
-        <FormComponent :livroProps="livro" @limpaLivroProps="limpaProps"/>
+        <FormComponent :livroProps="livro" @limpaLivroProps="limpaProps" :tipoFormularioProps="'editar'"/>
     </div>
 </template>
 
@@ -16,6 +16,7 @@ export default defineComponent({
     components: { FormComponent },
     setup() {
         const livro = ref<ILivro>()
+        const tipoFormularioProps = ''
         livro.value = store.state.livro
         const caminhoImagem = `http://localhost:3000/${livro.value.imagem}`
         livro.value.imagem = caminhoImagem
@@ -24,7 +25,8 @@ export default defineComponent({
         }
         return {
             livro,
-            limpaProps
+            limpaProps,
+            tipoFormularioProps
         }
     }
 })

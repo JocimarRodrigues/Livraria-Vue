@@ -52,7 +52,7 @@ class LivrosController {
         autor: novasInfos.autor,
         classificacao: novasInfos.classificacao,
         resenha: novasInfos.resenha,
-        imagem: novasInfos.imagem
+        imagem: req.file.path
     }
     try {
       await database.Livros.update(livroAtualizado, {
@@ -60,12 +60,12 @@ class LivrosController {
           id: Number(id),
         },
       });
-      const livroAtualizado = await database.Livros.findOne({
+      const livro = await database.Livros.findOne({
         where: {
           id: Number(id),
         },
       });
-      return res.status(200).json(livroAtualizado);
+      return res.status(200).json(livro);
     } catch (error) {
       return res.status(500).json(error.message);
     }

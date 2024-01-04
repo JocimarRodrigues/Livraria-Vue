@@ -25,7 +25,7 @@ const router = Router();
 router.get("/livros", LivrosController.pegaTodosOsLivros)
 router.get("/livros/:id", LivrosController.pegaUmLivro)
 router.post("/livros", upload.single("imagem"), LivrosController.criaNovoLivro)
-router.put("/livros/:id", LivrosController.atualizarLivro)
+router.put("/livros/:id", upload.single("imagem"), LivrosController.atualizarLivro)
 router.delete("/livros/:id", LivrosController.excluirLivro)
 
 module.exports = router;

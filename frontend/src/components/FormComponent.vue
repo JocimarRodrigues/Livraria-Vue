@@ -6,17 +6,17 @@
                     :placeholder="livroProps ? `${livroProps.titulo}` : 'Digite um título para o livro'"
                     v-model="livro.titulo" required />
                 <input type="text" name="autor"
-                    :placeholder="livroProps ? `${livroProps.autor}` : 'DIgite um nome para o autor'"
-                    v-model="livro.autor" required/>
+                    :placeholder="livroProps ? `${livroProps.autor}` : 'DIgite um nome para o autor'" v-model="livro.autor"
+                    required />
                 <input type="number" name="classificacao"
                     :placeholder="livroProps ? `${livroProps.classificacao}` : 'Dê uma nota de 1 a 5 para o livro.'"
-                    v-model="livro.classificacao" required/>
+                    v-model="livro.classificacao" required />
             </div>
             <div class="imagem">
-                <img :src="livro.imagemUrl" alt="" class="" v-if="livroProps">
+                <img :src="livro.imagemUrl" alt="" class="" v-if="livroProps || livro.imagemUrl">
                 <img src="../assets/no-image.png" alt="" v-else>
                 <input type="file" name="imagem" id="fileInput" placeholder="Selecione uma imagem"
-                    @change="onInputChange($event)" required/>
+                    @change="onInputChange($event)" required />
                 <label for="fileInput">Escolher arquivo</label>
             </div>
             <h1>Review</h1>
@@ -33,11 +33,13 @@
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, ref, toRefs } from 'vue';
 import { apiService } from "@/services/apiService";
+import store from '@/store';
 
 export default defineComponent({
     name: 'FormComponent',
     props: {
-        livroProps: Object
+        livroProps: Object,
+        tipoFormularioProps: String,
     },
     setup(props, { emit }) {
 
@@ -47,15 +49,16 @@ export default defineComponent({
             classificacao: 0,
             imagem: null as File | null,
             imagemUrl: ''
-
-
         })
+
+        const idLivro = store.state.livro.id
 
         onMounted(() => {
             if (props.livroProps?.imagem) {
                 console.log(props.livroProps.imagem)
                 livro.value.imagemUrl = props.livroProps.imagem
             }
+            console.log(props.tipoFormularioProps)
         })
 
         const onSubmit = async () => {
@@ -64,7 +67,19 @@ export default defineComponent({
             formData.append("autor", livro.value.autor)
             formData.append("classificacao", livro.value.classificacao.toString())
             formData.append("imagem", livro.value.imagem as File)
-            await apiService.adicionaLivro(formData)
+
+            switch (props.tipoFormularioProps) {
+                case "adicionar":
+                    await apiService.adicionaLivro(formData)
+                    alert("Livro adicionado com sucesso!")
+                    break
+                case "editar":
+                    await apiService.editaLivro(idLivro, formData)
+                    alert("Livro editado com sucesso!")
+                    break
+            }
+
+
         }
         const onInputChange = (e: Event) => {
             const data = e.target as HTMLInputElement

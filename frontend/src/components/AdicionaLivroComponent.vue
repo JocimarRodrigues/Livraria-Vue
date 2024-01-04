@@ -2,7 +2,7 @@
     <div class="container">
         <h2>Adicionar Livro</h2>
     </div>
-    <FormComponent />
+    <FormComponent :tipo-formulario-props="'adicionar'"/>
 </template>
 
 <script lang="ts">
@@ -11,7 +11,13 @@ import FormComponent from './FormComponent.vue';
 
 export default defineComponent({
     name: 'AdicionaLivroComponent',
-    components: { FormComponent }
+    components: { FormComponent },
+    setup() {
+        const tipoFormularioProps = ''
+        return {
+            tipoFormularioProps
+        }
+    }
 })
 </script>
 
