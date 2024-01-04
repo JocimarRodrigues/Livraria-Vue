@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "a1s2d3f4",
-    "database": "avmb",
+    "database": "livraria",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
