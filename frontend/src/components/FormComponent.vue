@@ -54,8 +54,6 @@ export default defineComponent({
 
         const idLivro = store.state.livro.id
 
-        const livroStore = store.state.livro
-
         onMounted(() => {
             if (props.livroProps?.imagem) {
                 console.log(props.livroProps.imagem)
