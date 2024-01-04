@@ -8,9 +8,10 @@
         <img :src="`${caminhoImagem}${livro.imagem}`" alt="">
         <h1>{{ livro.titulo }}</h1>
         <h2>{{ livro.autor }}</h2>
-        <h3>{{ livro.classificacao }}</h3>
+        <h3><EstrelasComponent :total-estrelas="livro.classificacao"/></h3>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -19,44 +20,43 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import ILivro from '@/interfaces/ILivro';
 import store from '@/store';
+import EstrelasComponent from '@/components/EstrelasComponent.vue';
+
 
 
 export default defineComponent({
-  name: 'HomeView',
-  components: {
-
-  },
-  setup() {
-    const router = useRouter()
-    const livros = ref<ILivro[]>([])
-    const caminhoImagem = 'http://localhost:3000/'
-    const loading = ref(true)
-
-    onMounted(async () => {
-      try {
-        await store.dispatch('carregaLivros')
-        livros.value = store.state.livros
-        loading.value = false
-      } catch (error) {
-        console.log(error)
-      }
-    })
-
-    const irParaLivros = async (livro: ILivro) => {
-      try {
-        router.push({name: 'CardComponent', params: {id: livro.id}})
-      } catch (error) {
-        console.log(error)
-      }
-   
-    }
-    return {
-      livros,
-      loading,
-      caminhoImagem,
-      irParaLivros
-    }
-  }
+    name: 'HomeView',
+    setup() {
+        const router = useRouter();
+        const livros = ref<ILivro[]>([]);
+        const caminhoImagem = 'http://localhost:3000/';
+        const loading = ref(true);
+        onMounted(async () => {
+            try {
+                await store.dispatch('carregaLivros');
+                livros.value = store.state.livros;
+                loading.value = false;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+        const irParaLivros = async (livro: ILivro) => {
+            try {
+                router.push({ name: 'CardComponent', params: { id: livro.id } });
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        return {
+            livros,
+            loading,
+            caminhoImagem,
+            irParaLivros
+        };
+    },
+    components: { EstrelasComponent }
 });
 </script>
 
